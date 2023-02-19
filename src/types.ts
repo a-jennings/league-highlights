@@ -6,5 +6,10 @@ export type NavigationOption = {
 };
 
 export interface Styles {
-  [key: string]: CSSProperties | { [key: string]: CSSProperties };
+  [key: string]: CSSProperties | Styles;
 }
+
+export type AppState = {
+  spoilerMode: boolean;
+  setSpoilerMode: (value: boolean) => void;
+};
