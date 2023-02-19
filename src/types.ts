@@ -13,3 +13,9 @@ export type AppState = {
   spoilerMode: boolean;
   setSpoilerMode: (value: boolean) => void;
 };
+
+export type Response<T> = {
+  data: {
+    cargoquery: Array<T>;
+  };
+};
