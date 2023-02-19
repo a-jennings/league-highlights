@@ -1,5 +1,5 @@
 function App() {
-  return <></>;
+  return <>League Highlights</>;
 }
 
 export default App;
