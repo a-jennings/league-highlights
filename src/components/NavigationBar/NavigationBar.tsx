@@ -1,40 +1,44 @@
 import React, { ReactElement } from "react";
-import { Box, Typography, Tabs, Tab } from "@mui/material";
+import { Box, lighten, Typography, useTheme } from "@mui/material";
 import { useStyles } from "./NavigationBar.styles";
-import { useSetState } from "hooks/useSetState";
+import { NavigationOption } from "types";
+import { Link, useLocation } from "react-router-dom";
 
-type NavigationBarState = {
-  currentTab: number;
+type NavigationBarProps = {
+  navLinks: Array<NavigationOption>;
 };
 
-export function NavigationBar(): ReactElement {
+export function NavigationBar(props: NavigationBarProps): ReactElement {
   const classes = useStyles;
-  const [state, setState] = useSetState<NavigationBarState>({
-    currentTab: 1,
-  });
-
-  const handleChange = (_event: React.SyntheticEvent, value: number) => {
-    setState({
-      currentTab: value,
-    });
-  };
+  const { navLinks } = props;
+  const theme = useTheme();
+  const location = useLocation();
 
   return (
     <Box sx={classes.container}>
-      <Box display="flex" alignItems="center" p={1.25}>
-        <img src="logo.png" alt="logo" style={classes.logo} />
-        <Typography sx={classes.mainText}>League Highlights</Typography>
-      </Box>
-      <Tabs
-        value={state.currentTab}
-        onChange={handleChange}
-        sx={classes.tabContainer}
-      >
-        <Tab label="LEC" sx={classes.tab} />
-        <Tab label="LCK" sx={classes.tab} />
-        <Tab label="LPL" sx={classes.tab} />
-        <Tab label="LCS" sx={classes.tab} />
-      </Tabs>
+      <Link to="/" style={classes.link}>
+        <Box display="flex" alignItems="center" p={1.25}>
+          <img src="logo.png" alt="logo" style={classes.logo} />
+          <Typography sx={classes.mainText}>League Highlights</Typography>
+        </Box>
+      </Link>
+
+      {navLinks.map((option) => (
+        <Link to={option.link} style={classes.link} key={option.label}>
+          <Box
+            sx={{
+              backgroundColor: location.pathname.startsWith(option.link)
+                ? lighten(theme.palette.primary.main, 0.3)
+                : "",
+              transition: "all 0.3s ease",
+            }}
+            px={2.5}
+            py="28px"
+          >
+            <Typography>{option.label}</Typography>
+          </Box>
+        </Link>
+      ))}
     </Box>
   );
 }

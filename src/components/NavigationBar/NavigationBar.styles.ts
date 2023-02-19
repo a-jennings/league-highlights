@@ -19,15 +19,8 @@ export const useStyles: Styles = {
     color: theme.palette.common.white,
     marginRight: 2.5,
   },
-  tabContainer: {
-    "& .MuiTabs-indicator": {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  tab: {
-    color: "rgba(255,255,255,0.7)",
-    "&.Mui-selected": {
-      color: theme.palette.common.white,
-    },
+  link: {
+    textDecoration: "none",
+    color: theme.palette.common.white,
   },
 };
